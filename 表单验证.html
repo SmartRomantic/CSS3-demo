@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <style>
+    		#for{width: 800px;margin: 50px auto;border: 1px solid silver;background: pink;}
+		#tab{width: 710px;margin:20px auto;font-size: 15px;color: #555;}
+		span{margin-left: 10px;}
+		.text{text-align: right;}
+    </style>
+    <body>
+	    <div id="for">
+	    	<form action="baidu.com" novalidate>
+	    		<table  cellspacing="0" cellpadding="10" id="tab">
+		        		<tr>
+		        			<td width="18%" class="text">用户名</td>
+		        			<td width="82%"><input type="text" name='username' required pattern='\w{5,16}'><span></span></td>
+		        		</tr>
+		        		<tr>
+		        			<td class="text">密码</td>
+		        			<td><input type="password" minlength='6' maxlength="10" name='password' required pattern='\w{6,10}'><span></span></td>
+		        		</tr>
+		        		<tr>
+		        			<td class="text">再次输入密码</td>
+		        			<td><input type="password" name="repassword" required minlength='6' maxlength="10"><span></span></td>
+		        		</tr>
+		        		<tr>
+		        			<td class="text">日期</td>
+		        			<td><input type="date" name="date" required><span></span></td>
+		        		</tr>
+		        		<tr>
+		        			<td class="text">邮箱</td>
+		        			<td><input type="email" name="email" required><span></span></td>
+		        		</tr>
+		        		<tr>
+		        			<td></td>
+		        			<td><input type="submit" name="submit" style="padding:3px 10px;"></td>
+		        		</tr>
+	    		</table>
+	    	</form>
+	    </div>
+    </body>
+</html>
+<script src="jquery-1.12.3.min.js"></script>
+<script>
+	/*var table=document.querySelector('#tab');
+	var firTd=table.querySelectorAll('tr td:first-child');
+	//console.log(firTd);
+	for(var i=0;i<firTd.length-1;i++){
+		firTd[i].style.textAlign='right';
+	}*/
+
+
+	//验证用户名
+	//获取输入的用户名
+	var userName=document.querySelector('input[name=username]');
+	var username=false;
+	userName.onfocus=function(){
+		this.nextSibling.innerHTML='请输入由5-16个字符的数字、字母或下划线组成的用户名';
+		this.nextSibling.style.color='blue';
+	}
+	userName.onblur=function(){
+		console.log(this);
+		//添加invalid事件
+		//获取必填项错误信息
+		console.log(this.validity.valueMissing);
+		if(this.validity.valueMissing){//判断必填项
+			console.log(this.nextSibling);
+			this.nextSibling.innerHTML='这是必填项';
+			this.nextSibling.style.color='red';
+		}else if(this.validity.patternMismatch){//判断正则
+			this.nextSibling.innerHTML='用户名应为5-16个字符的数字、字母或下划线';
+			this.nextSibling.style.color='red';
+		}else{
+			username=true;
+			this.nextSibling.innerHTML='√';
+			this.nextSibling.style.color='green';
+		}	
+	}
+	
+
+	//验证密码
+	var oPwd=document.querySelector('input[name=password]');
+	console.log(oPwd);
+	var opwd=oPwd.validity.patternMismatch;
+	oPwd.onfocus=function(){
+		this.nextSibling.innerHTML='请输入由6-10个字符的数字、字母或下划线组成的密码';
+		this.nextSibling.style.color='blue';
+	}
+	oPwd.onblur=function(){
+		if(this.validity.valueMissing){
+			this.nextSibling.innerHTML='这是必填项';
+			this.nextSibling.style.color='red';
+		}else if(this.validity.patternMismatch){
+			this.nextSibling.innerHTML='密码应为6-10个字符的数字、字母或下划线';
+			this.nextSibling.style.color='red';
+		}else{
+			pwd=true;
+			this.nextSibling.innerHTML='√';
+			this.nextSibling.style.color='green';
+		}
+	}
+
+	//验证再次输入密码
+	var orePwd=document.querySelector('input[name=repassword]');
+	var repwd=false;
+	orePwd.onfocus=function(){
+		this.nextSibling.innerHTML='请输入由6-10个字符的数字、字母或下划线组成的密码';
+		this.nextSibling.style.color='blue';
+	}
+	orePwd.onblur=function(){
+		if(this.validity.valueMissing){
+			this.nextSibling.innerHTML='这是必填项';
+			this.nextSibling.style.color='red';
+		}
+		console.log(oPwd.validity.patternMismatch)
+		if(this.value==oPwd.value&& !oPwd.validity.patternMismatch){
+			if(this.value.length==0){
+				this.nextSibling.innerHTML='这是必填项';
+				this.nextSibling.style.color='red';
+			}else{
+				repwd=true;
+				this.nextSibling.innerHTML='√';
+				this.nextSibling.style.color='green';
+			}
+		}else{
+			this.nextSibling.innerHTML='请填入正确的密码';
+			this.nextSibling.style.color='red';
+		}
+	}
+
+	//验证日期
+	var oDate=document.querySelector('input[name=date]');
+	var date=false;
+	oDate.onfocus=function(){
+		this.nextSibling.innerHTML='请选择日期';
+		this.nextSibling.style.color='blue';
+	}
+	oDate.onblur=function(){
+		if(this.validity.valueMissing){
+			this.nextSibling.innerHTML='这是必填项';
+			this.nextSibling.style.color='red';
+		}else{
+			date=true;
+			this.nextSibling.innerHTML='√';
+			this.nextSibling.style.color='green';
+		}
+	}
+
+	//验证邮箱
+	var oEmail=document.querySelector('input[name=email]');
+	var email=false;
+	oEmail.onfocus=function(){
+		this.nextSibling.innerHTML='请输入正确的邮箱';
+		this.nextSibling.style.color='blue';
+	}
+	oEmail.onblur=function(){
+		if(this.validity.valueMissing){
+			this.nextSibling.innerHTML='这是必填项';
+			this.nextSibling.style.color='red';
+		}else if(this.validity.typeMismatch){
+			this.nextSibling.innerHTML='请输入正确的邮箱：例如：zhangsan@163.com';
+			this.nextSibling.style.color='red';
+		}else{
+			email=true;
+			this.nextSibling.innerHTML='√';
+			this.nextSibling.style.color='green';
+		}
+	}
+
+
+	//验证是否可以提交
+	var oForm=document.querySelector('form');
+	oForm.onsubmit=function(){
+		userName.onblur();
+		oPwd.onblur();
+		orePwd.onblur();
+		oDate.onblur();
+		oEmail.onblur();
+		if(username && pwd&&repwd &&  date&& email) {
+			return true;
+		} 
+		alert('请填写完整');
+		return false;
+
+	}
+	
+</script>

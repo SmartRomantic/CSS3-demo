@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+        	*{margin: 0;padding: 0;}
+			li{list-style: none;}
+			li{float: left;width: 200px;height: 200px;margin-left: 100px;}
+			#div1{width: 900px;height: 300px;border:1px solid #333;position: absolute;top:300px;left:100px;}
+			#div1 p{width: 900px;height: 30px;border-bottom: 1px solid #333;line-height: 30px;}
+			.a1{width: 300px;float: left;}
+			.a2{width: 300px;float: left;}
+			.a3{width: 300px;float: left;}
+			#allmoney{float: right;}
+        </style>
+        <script>
+        window.onload = function(){
+
+        	var aLi = document.getElementsByTagName('li');
+        	var oDiv = document.getElementById('div1');
+        	
+        	var iSum = 0;
+        	var allMoney = null;
+
+        	
+
+        	var obj = {};
+
+        	for( var i = 0 ; i < aLi.length ; i++ ){
+
+        		aLi[i].ondragstart = function (ev){
+
+        			var ev = ev || window.envent;
+        			var aP = this.getElementsByTagName('p');
+
+        			ev.dataTransfer.setData('title',aP[0].innerHTML);
+        			ev.dataTransfer.setData('money',aP[1].innerHTML);
+        			ev.dataTransfer.setDragImage(this,100,100);
+
+        		}
+
+        	}
+
+        	oDiv.ondragover = function (ev){
+
+        		ev.preventDefault();
+
+        	};
+
+        	oDiv.ondrop = function (ev){
+
+        		ev.preventDefault();
+        		
+        		var sTitle = ev.dataTransfer.getData('title');
+        		var sMoney = ev.dataTransfer.getData('money');
+
+
+        		if( !obj[sTitle] ){
+        			
+        			var oP = document.createElement('p');
+        		
+	        		var oSpan = document.createElement('span');
+	        		oSpan.className = 'a1';
+	        		oSpan.innerHTML = 1;
+	        		oP.appendChild(oSpan);
+
+	        		var oSpan = document.createElement('span');
+	        		oSpan.className = 'a2';
+	        		oSpan.innerHTML = sTitle;
+	        		oP.appendChild(oSpan);
+
+	        		var oSpan = document.createElement('span');
+	        		oSpan.className = 'a3';
+	        		oSpan.innerHTML = sMoney;
+	        		oP.appendChild(oSpan);
+	        		
+					oDiv.appendChild(oP);
+
+	        		obj[sTitle] = 1;
+
+        		}else{
+        			
+        			var a1 = document.getElementsByClassName('a1');
+        			var a2 = document.getElementsByClassName('a2');
+
+        			for (var i = 0; i < a2.length; i++) {
+        				
+        				if( a2[i].innerHTML == sTitle ){
+
+        					a1[i].innerHTML = parseInt(a1[i].innerHTML) + 1;
+
+        				}
+
+        			};
+        		
+        		}
+
+        		if( !allMoney ){
+
+        			allMoney = document.createElement('div');
+        			allMoney.id = 'allmoney';
+
+        		}
+        		
+        		iSum = iSum + parseInt(sMoney);
+        		allMoney.innerHTML = iSum + '￥';
+
+        		oDiv.appendChild(allMoney);
+
+        	};
+        
+        };
+        </script>
+    </head>
+    <body>
+    	<ul>
+    		<li draggable='true'>
+    			<img src="images/22786088-1_b_0.jpg" height="200" width="200" alt="">
+	    		<p>锋利的jquery</p>
+	    		<p>40￥</p>
+    		</li>
+    	</ul>
+    	<ul>
+    		<li draggable='true'>
+	    		<img src="images/23446345-1_b_3.jpg" height="200" width="200" alt="">
+	    		<p>Node.js开发实战详解</p>
+	    		<p>60￥</p>
+    		</li>
+    	</ul>
+    	<ul>
+    		<li draggable='true'>
+	    		<img src="images/23567020-1_b_2.jpg" height="200" width="200" alt="">
+	    		<p>HTML5移动Web开发实战详解</p>
+	    		<p>70￥</p>
+    		</li>
+    	</ul>
+    	<ul>
+    		<li draggable='true'>
+	    		<img src="images/23634404-1_b_2.jpg" height="200" width="200" alt="">
+	    		<p>Web前端开发最佳实践</p>
+	    		<p>80￥</p>
+    		</li>
+    	</ul>
+    	<div id="div1"></div>
+    </body>
+</html>

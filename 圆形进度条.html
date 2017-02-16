@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            body {
+                background: white;
+            }
+            canvas {
+                background: black;
+            }
+        </style>
+        <script>
+        window.onload = function() {
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            //圆心
+            var x = canvas.width / 2;
+            var y = canvas.height / 2;
+            var radius = 200;
+            var currentNum = 0;//当前执行的次数
+            //完成多长时间加载完毕
+            //每执行一次花费：20ms
+            //执行一分钟需要执行多少次
+            var nums = 1 * 60 * 1000 / 20;
+            //每执行一次需要转多少角度
+            var speed = Math.PI * 2 / nums;
+            
+            //绘制外边的圆
+            var drawWhiteCircle = function() {
+                context.save();
+                context.beginPath();
+                context.strokeStyle = "white";
+                context.arc(x, y, radius, 0, 2 * Math.PI, false);
+                context.stroke();
+                context.closePath();
+                context.restore();
+            }
+            //传递角度：angle
+            var drawBlueCircle = function(angle) {
+                context.save();
+                context.beginPath();
+                context.lineWidth = 5;
+                context.strokeStyle = "#117ED1";
+                context.arc(x, y, radius, -Math.PI / 2, -Math.PI / 2 + angle, false);
+                context.stroke();
+                context.closePath();
+                context.restore();
+            }
+
+            var drawText = function(txt) {
+                context.save();
+                context.beginPath();
+                context.fillStyle = "white";
+                context.font = "80px 宋体";
+                context.textAlign = "center";
+                context.textBaseline = "middle";
+                //绘制文字
+                context.fillText(txt, x, y);
+                context.closePath();
+                context.restore();
+            }
+
+           
+            var timer = window.setInterval(function() {
+                currentNum ++;//当前执行次数
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                drawWhiteCircle();
+                // drawBlueCircle(currentNum * Math.PI / 180);
+                drawBlueCircle(currentNum * speed);
+                // var val = Math.ceil(currentNum / 360 * 100);
+                var val = Math.ceil(currentNum / nums * 100);
+                drawText(val + "%");//绘制文字
+                // if(currentNum >= 360) {
+                //     clearInterval(timer);
+                //     currentNum = 0;
+                // }
+                //当达到最大执行次数时候，执行完毕
+                if(currentNum >= nums) {
+                    clearInterval(timer);
+                    currentNum = 0;
+                }
+            }, 20);
+            
+        }
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="600" height="600"></canvas>
+    </body>
+</html>
