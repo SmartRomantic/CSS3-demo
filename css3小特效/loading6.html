@@ -1,0 +1,129 @@
+<style>
+        .box { width:100%; padding:3%; box-sizing:border-box; overflow:hidden;}
+        .box .loader {  width:30%; float:left; height:200px; margin-right:3%; border:1px solid #ccc; box-sizing:border-box; display:flex; align-items: center; justify-content: center;}
+        .loading_1 { width:35px; height:35px; position:relative;}
+        @-webkit-keyframes loading_1 {
+            0% { transform: rotate(0deg);}
+            50% { transform: rotate(180deg);}
+            100% { transform: rotate(360deg);}
+        }
+        .loading_1 i { display:block; width:100%; height:100%; border-radius:50%; background: linear-gradient(transparent 0%, transparent 70%, #333 30%, #333 100%); animation: loading_1 0.5s linear infinite;}
+
+        @-webkit-keyframes loading_2 {
+            0% { transform: scaleY(1)}
+            50% { transform: scaleY(0.4)}
+            100% { transform: scaleY(1)}
+        }
+        .loading_2 i { width:4px; border-radius:2px; height:35px; margin:0 2px; display:inline-block; background:#333;}
+        .loading_2 i:nth-child(1) { animation: loading_2 .8s linear 0.1s infinite;}
+        .loading_2 i:nth-child(2) { animation: loading_2 .8s linear 0.2s infinite;}
+        .loading_2 i:nth-child(3) { animation: loading_2 .8s linear 0.3s infinite;}
+        .loading_2 i:nth-child(4) { animation: loading_2 .8s linear 0.4s infinite;}
+
+
+        .loading_3 { position:relative;}
+        @-webkit-keyframes loading_3 {
+            0% { transform: scale(1); opacity:1;}
+            50% { transform: scale(.5); opacity: .3;}
+            100% { transform: scale(1); opacity:1;}
+        }
+        .loading_3 i { display:block; width:15px; height:15px; border-radius:50%; background:#333; position:absolute;}
+        .loading_3 i:nth-child(1) { top:25px; left:0; animation:loading_3 .7s ease 0s infinite;}
+        .loading_3 i:nth-child(2) { top:17px; left:17px; animation:loading_3 .7s ease -0.12s infinite;}
+        .loading_3 i:nth-child(3) { top:0; left:25px; animation:loading_3 .7s ease -0.24s infinite;}
+        .loading_3 i:nth-child(4) { top:-17px; left:17px; animation:loading_3 .7s ease -0.36s infinite;}
+        .loading_3 i:nth-child(5) { top:-25px; left:0; animation:loading_3 .7s ease -0.48s infinite;}
+        .loading_3 i:nth-child(6) { top:-17px; left:-17px; animation:loading_3 .7s ease -0.60s infinite;}
+        .loading_3 i:nth-child(7) { top:0; left:-25px; animation:loading_3 .7s ease -0.72s infinite;}
+        .loading_3 i:nth-child(8) { top:17px; left:-17px; animation:loading_3 .7s ease -0.84s infinite;}
+
+        .loading_4 { width:60px; height:60px; position:relative; }
+        @-webkit-keyframes loading_4 {
+            0% { transform: scale(0); opacity:0;}
+            5% { opacity:1;}
+            100% { transform: scale(1); opacity:0;}
+        }
+        .loading_4 i { display:block; width:60px; height:60px; border-radius:50%; background:#333; position:absolute; left:0; top:0; opacity:0;}
+        .loading_4 i:nth-child(1) { -webkit-animation: loading_4  1s linear 0s infinite;}
+        .loading_4 i:nth-child(2) { -webkit-animation: loading_4  1s linear 0.2s infinite;}
+        .loading_4 i:nth-child(3) { -webkit-animation: loading_4  1s linear 0.4s infinite;}
+
+        .loading_5 { width:40px; height:40px; position:relative;}
+        @-webkit-keyframes loading_5 {
+            0% { transform: rotate(0deg) scale(1);}
+            50% { transform: rotate(180deg) scale(0.6);}
+            100% { transform: rotate(360deg) scale(1);}
+        }
+        .loading_5 i { display:block; border:2px solid #333; border-radius:50%; border-color:transparent #333; position:absolute;}
+        .loading_5 i:first-child { width:35px; height:35px; top:0; left:0; animation:loading_5 1s ease-in-out 0s infinite;}
+        .loading_5 i:last-child { width:15px; height:15px; top:10px; left:10px; animation: loading_5 1s ease-in-out .5s infinite reverse;}
+
+        .loading_6 { width:80px; height:20px; position:relative;}
+        @-webkit-keyframes loading_6 {
+            0% { left:100px; top:0;}
+            80% { left:0; top:0;}
+            85% { left:0; top:-20px; width:20px; height:20px;}
+            90% { width:40px; height:20px;}
+            95% { left:100px; top:-20px; width:20px; height:20px;}
+            100% { left:100px; top:0;}
+        }
+        .loading_6 i { display:inline-block; width:20px; height:20px; border-radius:50%; background:#333; margin-right:10px; position:absolute;}
+        .loading_6 i:nth-child(1) { animation:loading_6 2s linear 0s infinite;}
+        .loading_6 i:nth-child(2) { animation:loading_6 2s linear -0.4s infinite;}
+        .loading_6 i:nth-child(3) { animation:loading_6 2s linear -0.8s infinite;}
+        .loading_6 i:nth-child(4) { animation:loading_6 2s linear -1.2s infinite;}
+        .loading_6 i:nth-child(5) { animation:loading_6 2s linear -1.6s infinite;}
+
+    </style>
+    
+    <div class="box">
+    <div class="loader">
+        <div class="loading_1">
+            <i></i>
+        </div>
+    </div>
+    <div class="loader">
+        <div class="loading_2">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+    <div class="loader">
+        <div class="loading_3">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+</div>
+<div class="box">
+    <div class="loader">
+        <div class="loading_4">
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+    <div class="loader">
+        <div class="loading_5">
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+    <div class="loader">
+        <div class="loading_6">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div>
+</div>
