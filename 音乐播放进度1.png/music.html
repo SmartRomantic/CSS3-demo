@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>网页音乐播放----移动端版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/jquery-1.12.3.min.js"></script>
+</head>
+
+<body id="player">
+    <div class="box">
+        <canvas id="canvas" class="cover"></canvas>
+        <audio src="resources/郝云-活着.mp3" id="music"></audio>
+        <div class="screen">
+            <h3 id="title">welcome user H5 <br>player</h3>
+            <div class="func">
+                <span class="prev"><img src="images/prev.png"/></span>
+                <span class="play"><img src="images/play.png"/></span>
+                <span class="next"><img src="images/next.png"/></span>
+            </div>
+        </div>
+    </div>
+    <script src="js/fitphone.js"></script>
+    <script>
+    window.onload = function() {
+        var screen = document.querySelector(".screen");
+        var func = document.querySelector(".func");
+        var play = document.querySelector(".play");
+        var audio = document.querySelector("#music");
+        //1.添加圆形进度条
+        var canvas = document.getElementById("canvas");
+        var box = document.querySelector(".box");
+        //设置canvas的高度和宽度
+        //获取box的宽度和高度,获取class样式中的宽度和高度
+        var width = parseInt(getComputedStyle(box,null).width);
+        var height = parseInt(getComputedStyle(box,null).height);
+        // console.log("width:" + width + ";height=" + height);
+        canvas.width = width;
+        canvas.height = height;
+        var context = canvas.getContext("2d");//获取画笔
+        //1.1 绘制外部圆
+        var x = canvas.width / 2;
+        var y = canvas.height / 2;
+        var radius = x;
+        var drawWhiteCircle = function() {
+            context.save();
+            context.beginPath();
+            //绘制图形
+            context.strokeStyle = "transparent";
+            context.arc(x, y, radius, 0, Math.PI * 2, false);
+            context.stroke();
+            context.closePath();
+            context.restore();
+        }
+        //绘制进度圆
+        //angle:控制进度条变化的角度
+        var drawProgressCircle = function(angle) {
+            context.save();
+            context.beginPath();
+            //绘制
+            context.strokeStyle = "white";
+            context.lineWidth = 5;
+            context.arc(x, y, radius, -Math.PI / 2, -Math.PI / 2 + angle , false);
+            context.stroke();
+            context.closePath();
+            context.restore();
+        }
+        //绘制文本
+        //txt:要绘制的文本
+        var drawText = function(txt){
+            context.save();
+            context.beginPath();
+            context.fillStyle = "white";
+            context.font = "40px 宋体";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(txt, x, y);
+            context.closePath();
+            context.restore();
+        }
+
+        //将秒转换为 “00:00”
+        var getTimeStyle = function(seconds) {
+            var mins = parseInt(seconds / 60);//分钟
+            var scs = Math.round(seconds % 60);//秒
+            var minStr = mins < 10 ? "0" + mins : mins;
+            var scsStr = scs < 10 ? "0" + scs : scs;
+            return minStr + ":" + scsStr;
+        }
+        var timer = null;
+        var currentNum = 0;//执行定时器次数
+        var playMusic = function() {
+            //让进度条开始移动
+            //定义变量，让角度增加
+            //1.2 改变进度时间
+            //再次点击播放需要暂停
+            if(audio.paused){//如果是暂停，那么开始播放
+                //获取时间
+                var time = audio.duration;
+                var nums = time * 1000 / 20;
+                //每旋转一次需要转多少角度
+                var speed = 2 * Math.PI / nums;
+                //播放音乐
+                audio.play();
+                play.querySelector("img").src = "images/pause.png";
+                timer = window.setInterval(function(){
+                    currentNum ++;
+                    context.clearRect(0,0,canvas.width,canvas.height);//清空画布
+                    drawWhiteCircle();
+                    //需要将值转换为弧度
+                    drawProgressCircle(speed * currentNum);
+                    drawText(getTimeStyle(currentNum * 20 / 1000));
+                    //什么时候，进度完成？
+                    if(currentNum >= nums) {
+                        clearTimeout(timer);
+                    }
+                }, 20);
+            } else {//若是播放音乐，那么暂停音乐
+                play.querySelector("img").src = "images/play.png";
+                audio.pause();//暂停音乐
+                clearInterval(timer);
+            }
+            
+        }
+
+        //播放
+        play.onclick = function() {
+            playMusic();
+        }
+
+
+        //鼠标进入事件
+        screen.onmouseenter = function() {
+            func.style.display = "block";
+        }
+        //鼠标离开事件
+        screen.onmouseleave = function() {
+            func.style.display = "none";
+        }
+    }
+    </script>
+</body>
+</html>
